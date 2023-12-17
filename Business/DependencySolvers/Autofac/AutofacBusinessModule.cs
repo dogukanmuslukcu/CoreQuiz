@@ -22,7 +22,14 @@ namespace Business.DependencySolvers.Autofac
 
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
-          
+
+            builder.RegisterType<ExamManager>().As<IExamService>().SingleInstance();
+            builder.RegisterType<EfExamDal>().As<IExamDal>().SingleInstance();
+
+            builder.RegisterType<QuestionManager>().As<IQuestionService>().SingleInstance();
+            builder.RegisterType<EfQuestionDal>().As<IQuestionDal>().SingleInstance();
+
+
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
 
