@@ -14,6 +14,8 @@ namespace Business.Abstract
         IResult Add(Question question);
         IResult Delete(Question question);
         IResult Update(Question question);
-       
+        IDataResult<Question> GetQuestionById(int questionId);
+        IDataResult<List<Question>> GetQuestionDetailsByExamId(int examId, int questionId);
+
     }
 }
