@@ -28,9 +28,23 @@ namespace WebAPI.Controllers
             }
         }
         [HttpGet("getQuestionDetailsByExamId")]
-        public IActionResult GetQuestionDetailsByExamId(int examId,int questionId)
+        public IActionResult GetQuestionDetailsByExamId(int examId, int questionId)
         {
             var result = _questionService.GetQuestionDetailsByExamId(examId, questionId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
+        
+        [HttpPost("checkUserPointWithQuestion")]
+        public IActionResult CheckUserPointWithQuestion(int examId, int questionId, string userAnswer, int userId)
+        {
+            var result = _questionService.CheckUserPointWithQuestion(examId,questionId, userAnswer, userId);
             if (result.Success)
             {
                 return Ok(result);

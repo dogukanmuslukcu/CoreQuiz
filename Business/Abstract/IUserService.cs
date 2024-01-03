@@ -3,6 +3,7 @@ using Core.Entity.Concrete;
 using Core.Utilities;
 using Core.Utilities.Abstract;
 using Entities.DTOs;
+using Entity.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,12 +14,14 @@ namespace Business.Abstract
     {
         IResult Add(User user);
         IResult Update(UserForGetDto user);
+        IResult AddPoint(int userID, string examName);
         IResult Delete(User user);
         IDataResult<List<User>> GetAll();
         IDataResult<User> GetByID(int userID);
         List<OperationClaim> GetClaims(User user);
         User GetByMail(string email);
         IDataResult<List<UserForGetDto>> GetUserDTO(string email);
+
 
     }
 }

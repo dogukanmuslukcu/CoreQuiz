@@ -13,7 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfQuestionDal : IEfEntityRepositoryBase<Question, ReCapProjectDBContext>, IQuestionDal
     {
-        public List<Question> GetQuestionDetailsByExamId(int examId, int questionId)
+        public Question GetQuestionDetailsByExamId(int examId, int questionId)
         {
 
             using (ReCapProjectDBContext context = new ReCapProjectDBContext())
@@ -36,9 +36,9 @@ namespace DataAccess.Concrete.EntityFramework
                                 Score = question.Score
                             };
 
-                
 
-                return query.ToList();
+
+                return query.FirstOrDefault();
             }
 
         }

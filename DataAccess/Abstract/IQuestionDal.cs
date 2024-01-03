@@ -12,6 +12,6 @@ namespace DataAccess.Abstract
 {
     public interface IQuestionDal : IEntityRepository<Question>
     {
-        List<Question> GetQuestionDetailsByExamId(int examId, int questionId);
+        Question GetQuestionDetailsByExamId(int examId, int questionId);
     }
 }

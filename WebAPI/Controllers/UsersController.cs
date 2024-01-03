@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
 using Entities.DTOs;
+using Entity.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -57,6 +58,19 @@ namespace WebAPI.Controllers
         public IActionResult Update(UserForGetDto user)
         {
             var result = _userService.Update(user);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
+        [HttpPost("addPoint")]
+        public IActionResult AddPoint(int userID, string examName)
+        {
+            var result = _userService.AddPoint(userID, examName);
             if (result.Success)
             {
                 return Ok(result);

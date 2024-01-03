@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Entities.Concrete;
 using Core.Utilities;
 using Core.Utilities.Abstract;
 using Core.Utilities.Concrete;
@@ -17,15 +18,22 @@ namespace Business.Concrete
     public class QuestionManager : IQuestionService
     {
         IQuestionDal _questionDal;
-        public QuestionManager(IQuestionDal questionDal)
+        IUserService _userservice;
+        IExamService _examService;
+        public QuestionManager(IQuestionDal questionDal,IUserService userService,IExamService examService)
         {
             _questionDal = questionDal;
+            _userservice = userService;
+            _examService = examService;
+
         }
 
         public IResult Add(Question question)
         {
             throw new NotImplementedException();
         }
+
+       
 
         public IResult Delete(Question question)
         {
@@ -37,11 +45,25 @@ namespace Business.Concrete
             return new SuccessDataResult<Question>(_questionDal.Get(I => I.Id == questionId), Messages.SuccessDataMessage);
         }
 
-        public IDataResult<List<Question>> GetQuestionDetailsByExamId(int examId, int questionId)
+        public IDataResult<Question> GetQuestionDetailsByExamId(int examId, int questionId)
         {
-            return new SuccessDataResult<List<Question>>(_questionDal.GetQuestionDetailsByExamId(examId, questionId),Messages.SuccessDataMessage);
+            return new SuccessDataResult<Question>(_questionDal.GetQuestionDetailsByExamId(examId, questionId),Messages.SuccessDataMessage);
         }
+        public IDataResult<Question> CheckUserPointWithQuestion(int examId, int questionId, string userAnswer, int userId)
+        {
+            var rightAnswer = _questionDal.GetQuestionDetailsByExamId(examId, questionId).RightAnswer;
+            var examName = _examService.GetExamById(examId).Data.ExamName;
 
+
+            if (rightAnswer.ToLower() == userAnswer.ToLower())
+            {
+                _userservice.AddPoint(userId, examName);
+            }
+            return new SuccessDataResult<Question>(Messages.SuccessDataMessage);
+
+
+
+        }
         public IResult Update(Question question)
         {
             throw new NotImplementedException();

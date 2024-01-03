@@ -16,7 +16,7 @@ namespace Business.Abstract
         IResult Delete(Exam exam);
         IResult Update(Exam exam);
         IDataResult<Exam> GetExamById(int Id);
-        IDataResult<List<Exam>> GetExamDetailsById(int Id);
+        IDataResult<Exam> GetExamDetailsById(int Id);
         IDataResult<List<Exam>> GetAllExams();
     }
 }
