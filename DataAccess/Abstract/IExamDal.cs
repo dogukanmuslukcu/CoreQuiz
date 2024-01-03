@@ -14,6 +14,6 @@ namespace DataAccess.Abstract
 {
     public interface IExamDal : IEntityRepository<Exam>
     {
-        Exam GetExamDetails(int Id);
+        List<Exam> GetExamDetails(int Id);
     }
 }

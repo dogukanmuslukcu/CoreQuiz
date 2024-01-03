@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfExamDal : IEfEntityRepositoryBase<Exam, ReCapProjectDBContext>, IExamDal
     {
-        public Exam GetExamDetails(int examId)
+        public List<Exam> GetExamDetails(int examId)
         {
             using(ReCapProjectDBContext context = new ReCapProjectDBContext())
             {
@@ -46,7 +46,7 @@ namespace DataAccess.Concrete.EntityFramework
                                                    .ToList()
                                  };
 
-                return resultList.FirstOrDefault();
+                return resultList.ToList();
 
             }
 

@@ -39,9 +39,9 @@ namespace Business.Concrete
             return new SuccessDataResult<Exam>(_examDal.Get(e => e.Id == Id), Messages.SuccessDataMessage);
         }
 
-        public IDataResult<Exam> GetExamDetailsById(int Id)
+        public IDataResult<List<Exam>> GetExamDetailsById(int Id)
         {
-            return new SuccessDataResult<Exam>(_examDal.GetExamDetails(Id), Messages.SuccessDataMessage);
+            return new SuccessDataResult<List<Exam>>(_examDal.GetExamDetails(Id), Messages.SuccessDataMessage);
         }
 
         public IDataResult<List<Exam>> GetAllExams()
