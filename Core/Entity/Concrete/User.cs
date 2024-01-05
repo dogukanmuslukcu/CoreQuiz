@@ -7,9 +7,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Core.Entities.Concrete
+namespace Core.Entities.Concrete
 {
     public class User : IEntity
     {
+        public User()
+        {
+            PointsJson = "{}";
+        }
+
+
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
