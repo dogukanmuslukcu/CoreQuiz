@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Core.Entities.Concrete
+
 namespace Core.Entities.Concrete
 {
     public class User : IEntity
