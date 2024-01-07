@@ -16,7 +16,7 @@ namespace Entity
         public string Answer3 { get; set; }
         public string Answer4 { get; set; }
         public string RightAnswer { get; set; }
-        public int Score { get; set; } 
+        public int Score { get; set; } = 5;
 
 
     }
