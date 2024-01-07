@@ -55,7 +55,7 @@ namespace Business.Concrete
             var examName = _examService.GetExamById(examId).Data.ExamName;
 
 
-            if (rightAnswer.ToLower() == userAnswer.ToLower())
+            if (rightAnswer.Replace(" ", "").ToLower() == userAnswer.Replace(" ", "").ToLower())
             {
                 _userservice.AddPoint(userId, examName);
             }
