@@ -23,7 +23,7 @@ public class EducationManager : IEducationService
         _educationDal = educationDal;
     }
 
-    public IDataResult<List<EducationDto>> GetAll()
+    public IDataResult<List<EducationDto>> GetAllEducationDto()
     {
        return new SuccessDataResult<List<EducationDto>>(_educationDal.GetAllEducationDto(), Messages.SuccessDataMessage);
     }
