@@ -25,7 +25,7 @@ public class EducationManager : IEducationService
 
     public IDataResult<List<EducationDto>> GetAll()
     {
-       return new SuccessDataResult<List<EducationDto>>(_educationDal.GetAll(), Messages.SuccessDataMessage);
+       return new SuccessDataResult<List<EducationDto>>(_educationDal.GetAllEducationDto(), Messages.SuccessDataMessage);
     }
 
     public IDataResult<List<EducationDto>> GetByExamId(int id)

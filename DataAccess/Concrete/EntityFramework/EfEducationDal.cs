@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace DataAccess.Concrete.EntityFramework;
 public class EfEducationDal : IEfEntityRepositoryBase<Education, ReCapProjectDBContext>, IEducationDal
 {
-    public List<EducationDto> GetAll()
+    public List<EducationDto> GetAllEducationDto()
     {
         using(ReCapProjectDBContext context = new ReCapProjectDBContext())
             {

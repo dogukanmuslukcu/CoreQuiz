@@ -19,7 +19,7 @@ public class EducationController : ControllerBase
     [HttpGet("getAllEducationDto")]
     public IActionResult GetAllEducationDto()
     {
-        var result = _educationService.GetAll();
+        var result = _educationService.GetAllEducationDto();
         if (result.Success)
         {
             return Ok(result);

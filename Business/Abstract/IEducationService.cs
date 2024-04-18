@@ -13,7 +13,7 @@ namespace Business.Abstract;
 
 public interface IEducationService
 {
-    IDataResult <List<EducationDto>> GetAll();
+    IDataResult <List<EducationDto>> GetAllEducationDto();
     IDataResult<List<EducationDto>> GetByExamId(int id);
     IResult GetById(int id);
 }
