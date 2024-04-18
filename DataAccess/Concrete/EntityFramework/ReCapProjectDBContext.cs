@@ -23,6 +23,7 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Exam> Exams { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<ExamQuestionDto> ExamQuestions { get; set; }
+        public DbSet<Education> Educations { get; set; }
 
     }
 }

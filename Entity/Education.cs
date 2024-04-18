@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Entity.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entity;
 
-public class Education
+public class Education : IEntity
 {
     public int EducationId { get; set; }
     public int ExamId { get; set; }
