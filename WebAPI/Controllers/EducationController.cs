@@ -55,4 +55,19 @@ public class EducationController : ControllerBase
             return BadRequest(result);
         }
     }
+    [HttpGet("getVideoTimeById")]
+    public IActionResult GetVideoTimeById(int id) 
+    {
+        try
+        {
+            var result = _educationService.GetYouTubeVideoDuration(id);
+            return Ok(result);
+        }
+        catch (Exception)
+        {
+
+            throw new Exception("Video süresi alınırken hata oluştu");
+        }
+        
+    }
 }
