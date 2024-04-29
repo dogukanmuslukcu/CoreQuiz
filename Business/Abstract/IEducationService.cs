@@ -16,4 +16,5 @@ public interface IEducationService
     IDataResult <List<EducationDto>> GetAllEducationDto();
     IDataResult<List<EducationDto>> GetByExamId(int id);
     IResult GetById(int id);
+    TimeSpan GetYouTubeVideoDuration(int ıd);
 }
