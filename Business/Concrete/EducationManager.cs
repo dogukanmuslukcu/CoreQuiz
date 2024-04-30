@@ -35,7 +35,7 @@ public class EducationManager : IEducationService
         return new SuccessDataResult<List<EducationDto>>(_educationDal.GetByExamId(id), Messages.SuccessDataMessage);
     }
 
-    public IResult GetById(int id)
+    public IDataResult<EducationDto> GetById(int id)
     {
         return new SuccessDataResult<EducationDto>(_educationDal.GetById(id), Messages.SuccessMessage);
     }
