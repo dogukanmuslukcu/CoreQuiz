@@ -77,6 +77,9 @@ public class EducationManager : IEducationService
 
     public IResult Vote(int educationId, int vote)
     {
+        if (vote > 5)
+            return new ErrorResult(Messages.VoteCanNotBeGreaterThan5);
+
         var education = _educationDal.Get(id => id.EducationId == educationId);
         education.VoteAmount += 1;
         education.TotalVotes += vote;

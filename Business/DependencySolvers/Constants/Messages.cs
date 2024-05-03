@@ -23,6 +23,8 @@ namespace Business.Constants
         public static string AccessTokenCreated = "Token oluşturuldu.";
         public static string AuthorizationDenied = "Yetkiniz yok.";
         public static string VoteNullMessage = "Eğitim üzerinde herhangi bir oylama yapılmamıştır.";
+        public static string VoteCanNotBeGreaterThan5 = "Oy 5 puanı geçemez";
+
 
     }
 }
