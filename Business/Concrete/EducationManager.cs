@@ -68,27 +68,35 @@ public class EducationManager : IEducationService
 
     public IDataResult<int> GetVote(int educationId)
     {
-        var TotalVotes = _educationDal.Get(v => v.EducationId == educationId).TotalVotes;
-        var VoteAmount = _educationDal.Get(v => v.EducationId == educationId).VoteAmount;
+        int TotalVotes;
+        int VoteAmount;
+        try
+        {
+             TotalVotes = _educationDal.Get(v => v.EducationId == educationId).TotalVotes;
+             VoteAmount = _educationDal.Get(v => v.EducationId == educationId).VoteAmount;
+            
+        }
+        catch (Exception ex)
+        {
 
+            return new ErrorDataResult<int>(ex.Message);
+        }
         if (TotalVotes == 0 || VoteAmount == 0)
             return new ErrorDataResult<int>(Messages.VoteNullMessage);
-
         return new SuccessDataResult<int>(TotalVotes / VoteAmount, Messages.SuccessMessage);
+
     }
 
     public IResult Vote(int educationId, int vote)
     {
         if (vote > 5)
             return new ErrorResult(Messages.VoteCanNotBeGreaterThan5);
-
-        var education = _educationDal.Get(id => id.EducationId == educationId);
-        education.VoteAmount += 1;
-        education.TotalVotes += vote;
-
-
+        Education education;
         try
         {
+            education = _educationDal.Get(id => id.EducationId == educationId);
+            education.VoteAmount += 1;
+            education.TotalVotes += vote;
             _educationDal.Update(education);
             return new SuccessResult(Messages.SuccessMessage);
         }
