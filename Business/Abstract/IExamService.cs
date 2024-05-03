@@ -18,5 +18,7 @@ namespace Business.Abstract
         IDataResult<Exam> GetExamById(int Id);
         IDataResult<List<Exam>> GetExamDetailsById(int Id);
         IDataResult<List<Exam>> GetAllExams();
+        IDataResult<int> GetVote(int examId);
+        IResult Vote(int examId, int vote);
     }
 }
