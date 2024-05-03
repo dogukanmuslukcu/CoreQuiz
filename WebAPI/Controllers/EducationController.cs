@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities;
 using Core.Utilities.Abstract;
 using Entity.DTOs;
 using Microsoft.AspNetCore.Http;
@@ -58,17 +59,16 @@ public class EducationController : ControllerBase
     [HttpGet("getVideoTimeById")]
     public IActionResult GetVideoTimeById(int id) 
     {
-        try
+        var result = _educationService.GetYouTubeVideoDuration(id);
+        if (result.Success)
         {
-            var result = _educationService.GetYouTubeVideoDuration(id);
             return Ok(result);
         }
-        catch (Exception)
+        else
         {
-
-            throw new Exception("Video süresi alınırken hata oluştu");
+            return BadRequest(result);
         }
-        
+
     }
     [HttpGet("getVote")]
     public IActionResult GetVote(int id)

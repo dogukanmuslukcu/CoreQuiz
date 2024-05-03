@@ -27,7 +27,7 @@ public class EducationManager : IEducationService
 
     public IDataResult<List<EducationDto>> GetAllEducationDto()
     {
-       return new SuccessDataResult<List<EducationDto>>(_educationDal.GetAllEducationDto(), Messages.SuccessDataMessage);
+        return new SuccessDataResult<List<EducationDto>>(_educationDal.GetAllEducationDto(), Messages.SuccessDataMessage);
     }
 
     public IDataResult<List<EducationDto>> GetByExamId(int id)
@@ -40,7 +40,7 @@ public class EducationManager : IEducationService
         return new SuccessDataResult<EducationDto>(_educationDal.GetById(id), Messages.SuccessMessage);
     }
 
-    public TimeSpan GetYouTubeVideoDuration(int ıd)
+    public IDataResult<TimeSpan> GetYouTubeVideoDuration(int ıd)
     {
         string videoId = GetYouTubeVideoId(ıd);
         string apiUrl = "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=AIzaSyAESoIxDU1ks6Nkyog3MhqnARPknb-8nfU&part=contentDetails";
@@ -49,8 +49,12 @@ public class EducationManager : IEducationService
         {
             string json = client.DownloadString(apiUrl);
             dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+
             string durationString = data.items[0].contentDetails.duration;
-            return XmlConvert.ToTimeSpan(durationString);
+            var duration = XmlConvert.ToTimeSpan(durationString);
+
+            return new SuccessDataResult<TimeSpan>(duration, Messages.SuccessDataMessage);
+
         }
     }
     private string GetYouTubeVideoId(int ıd)
@@ -64,16 +68,14 @@ public class EducationManager : IEducationService
 
     public IDataResult<int> GetVote(int educationId)
     {
-       var TotalVotes = _educationDal.Get(v => v.EducationId == educationId).TotalVotes;
-       var VoteAmount = _educationDal.Get(v => v.EducationId == educationId).VoteAmount;
+        var TotalVotes = _educationDal.Get(v => v.EducationId == educationId).TotalVotes;
+        var VoteAmount = _educationDal.Get(v => v.EducationId == educationId).VoteAmount;
 
         if (TotalVotes == 0 || VoteAmount == 0)
             return new ErrorDataResult<int>(Messages.VoteNullMessage);
 
         return new SuccessDataResult<int>(TotalVotes / VoteAmount, Messages.SuccessMessage);
     }
-
-    
 
     public IResult Vote(int educationId, int vote)
     {
@@ -83,12 +85,12 @@ public class EducationManager : IEducationService
         var education = _educationDal.Get(id => id.EducationId == educationId);
         education.VoteAmount += 1;
         education.TotalVotes += vote;
-     
-       
+
+
         try
         {
             _educationDal.Update(education);
-            return new SuccessResult(Messages.SuccessMessage); 
+            return new SuccessResult(Messages.SuccessMessage);
         }
         catch (Exception ex)
         {

@@ -16,7 +16,7 @@ public interface IEducationService
     IDataResult <List<EducationDto>> GetAllEducationDto();
     IDataResult<List<EducationDto>> GetByExamId(int id);
     IDataResult<EducationDto> GetById(int id);
-    TimeSpan GetYouTubeVideoDuration(int ıd);
+    IDataResult<TimeSpan> GetYouTubeVideoDuration(int ıd);
     IDataResult<int> GetVote(int educationId);
     IResult Vote(int educationId, int vote);
 }
