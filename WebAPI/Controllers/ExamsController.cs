@@ -56,6 +56,32 @@ namespace WebAPI.Controllers
                 return BadRequest(result);
             }
         }
+        [HttpGet("getVote")]
+        public IActionResult GetVote(int examId)
+        {
+            var result = _examService.GetVote(examId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
+        [HttpPost("vote")]
+        public IActionResult Vote(int examId, int vote)
+        {
+            var result = _examService.Vote(examId, vote);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
 
     }
 }
