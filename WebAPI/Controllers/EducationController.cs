@@ -70,4 +70,30 @@ public class EducationController : ControllerBase
         }
         
     }
+    [HttpGet("getVote")]
+    public IActionResult GetVote(int id)
+    {
+        var result = _educationService.GetVote(id);
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        else
+        {
+            return BadRequest(result);
+        }
+    }
+    [HttpPost("vote")]
+    public IActionResult Vote(int educationId, int vote)
+    {
+        var result = _educationService.Vote(educationId, vote);
+        if (result.Success)
+        {
+            return Ok(result);
+        }
+        else
+        {
+            return BadRequest(result);
+        }
+    }
 }
