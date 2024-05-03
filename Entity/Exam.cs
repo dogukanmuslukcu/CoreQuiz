@@ -13,6 +13,8 @@ namespace Entity
         public string ExamName { get; set; }
         public List<Question> Questions { get; set; }
         public int MinimumScore { get; set; }
+        public int TotalVotes { get; set; } = 0;
+        public int VoteAmount { get; set; } = 0;
 
     }
 }
