@@ -53,13 +53,43 @@ public class EducationManager : IEducationService
             return XmlConvert.ToTimeSpan(durationString);
         }
     }
-
     private string GetYouTubeVideoId(int ıd)
     {
         var videoString = _educationDal.GetById(ıd).VideoUrl;
 
         Uri uri = new Uri(videoString);
-        string query = uri.Query;   
+        string query = uri.Query;
         return System.Web.HttpUtility.ParseQueryString(query).Get("v");
+    }
+
+    public IDataResult<int> GetVote(int educationId)
+    {
+       var TotalVotes = _educationDal.Get(v => v.EducationId == educationId).TotalVotes;
+       var VoteAmount = _educationDal.Get(v => v.EducationId == educationId).VoteAmount;
+
+        if (TotalVotes == 0 || VoteAmount == 0)
+            return new ErrorDataResult<int>(Messages.VoteNullMessage);
+
+        return new SuccessDataResult<int>(TotalVotes / VoteAmount, Messages.SuccessMessage);
+    }
+
+    
+
+    public IResult Vote(int educationId, int vote)
+    {
+        var education = _educationDal.Get(id => id.EducationId == educationId);
+        education.VoteAmount += 1;
+        education.TotalVotes += vote;
+     
+       
+        try
+        {
+            _educationDal.Update(education);
+            return new SuccessResult(Messages.SuccessMessage); 
+        }
+        catch (Exception ex)
+        {
+            return new ErrorResult(Messages.ErrorMessage);
+        }
     }
 }
