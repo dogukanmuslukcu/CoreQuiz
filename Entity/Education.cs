@@ -15,4 +15,6 @@ public class Education : IEntity
     public string EducationDescription { get; set; }
     public string VideoUrl { get; set; }
     public string ContentImageUrl { get; set; }
+    public int TotalVotes { get; set; } = 0;
+    public int VoteAmount { get; set; } = 0;
 }
