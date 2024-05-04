@@ -51,33 +51,45 @@ namespace Business.Concrete
         }
         public IDataResult<int> GetVote(int examId)
         {
-            int TotalVotes;
-            int VoteAmount;
+            var exam = _examDal.Get(v => v.Id == examId);
+
+            if (exam == null)
+            {
+                return new ErrorDataResult<int>(Messages.ObjectDoesNotExist);
+            }
             try
             {
-                TotalVotes = _examDal.Get(exam => exam.Id == examId).TotalVotes;
-                VoteAmount = _examDal.Get(exam => exam.Id == examId).VoteAmount;
 
+                int TotalVotes = exam.TotalVotes;
+                int VoteAmount = exam.VoteAmount;
+
+                if (TotalVotes == 0 || VoteAmount == 0)
+                {
+                    return new ErrorDataResult<int>(Messages.VoteNullMessage);
+                }
+
+                return new SuccessDataResult<int>(TotalVotes / VoteAmount, Messages.SuccessMessage);
             }
             catch (Exception ex)
             {
-
                 return new ErrorDataResult<int>(ex.Message);
             }
-            if (TotalVotes == 0 || VoteAmount == 0)
-                return new ErrorDataResult<int>(Messages.VoteNullMessage);
-            return new SuccessDataResult<int>(TotalVotes / VoteAmount, Messages.SuccessMessage);
 
         }
 
         public IResult Vote(int examId, int vote)
         {
-            if (vote > 5)
-                return new ErrorResult(Messages.VoteCanNotBeGreaterThan5);
-            Exam exam;
+            var exam = _examDal.Get(v => v.Id == examId);
+
+            if (exam == null)
+            {
+                return new ErrorDataResult<int>(Messages.ObjectDoesNotExist);
+            }
+            if (vote > 5 || vote <= 0)
+                return new ErrorResult(Messages.VoteCanNotBeGreaterOrLess0To5);
+
             try
             {
-                exam = _examDal.Get(exam => exam.Id == examId);
                 exam.VoteAmount += 1;
                 exam.TotalVotes += vote;
                 _examDal.Update(exam);

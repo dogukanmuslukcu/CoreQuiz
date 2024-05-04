@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -68,33 +69,44 @@ public class EducationManager : IEducationService
 
     public IDataResult<int> GetVote(int educationId)
     {
-        int TotalVotes;
-        int VoteAmount;
+        var education = _educationDal.Get(v => v.EducationId == educationId);
+
+        if (education == null)
+        {
+            return new ErrorDataResult<int>(Messages.ObjectDoesNotExist);
+        }
         try
         {
-             TotalVotes = _educationDal.Get(v => v.EducationId == educationId).TotalVotes;
-             VoteAmount = _educationDal.Get(v => v.EducationId == educationId).VoteAmount;
-            
+           
+            int TotalVotes = education.TotalVotes;
+            int VoteAmount = education.VoteAmount;
+
+            if (TotalVotes == 0 || VoteAmount == 0)
+            {
+                return new ErrorDataResult<int>(Messages.VoteNullMessage);
+            }
+
+            return new SuccessDataResult<int>(TotalVotes / VoteAmount, Messages.SuccessMessage);
         }
         catch (Exception ex)
         {
-
             return new ErrorDataResult<int>(ex.Message);
         }
-        if (TotalVotes == 0 || VoteAmount == 0)
-            return new ErrorDataResult<int>(Messages.VoteNullMessage);
-        return new SuccessDataResult<int>(TotalVotes / VoteAmount, Messages.SuccessMessage);
-
     }
 
     public IResult Vote(int educationId, int vote)
     {
-        if (vote > 5)
-            return new ErrorResult(Messages.VoteCanNotBeGreaterThan5);
-        Education education;
+        var education = _educationDal.Get(v => v.EducationId == educationId);
+
+        if (education == null)
+        {
+            return new ErrorDataResult<int>(Messages.ObjectDoesNotExist);
+        }
+        if (vote > 5 || vote<=0)
+            return new ErrorResult(Messages.VoteCanNotBeGreaterOrLess0To5);
+        
         try
         {
-            education = _educationDal.Get(id => id.EducationId == educationId);
             education.VoteAmount += 1;
             education.TotalVotes += vote;
             _educationDal.Update(education);
