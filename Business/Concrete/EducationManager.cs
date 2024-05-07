@@ -50,14 +50,12 @@ public class EducationManager : IEducationService
         {
             string json = client.DownloadString(apiUrl);
             dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
-
             string durationString = data.items[0].contentDetails.duration;
             var duration = XmlConvert.ToTimeSpan(durationString);
-
-            return new SuccessDataResult<TimeSpan>(duration, Messages.SuccessDataMessage);
-
+            return new SuccessDataResult<TimeSpan>(duration,Messages.SuccessDataMessage);
         }
     }
+
     private string GetYouTubeVideoId(int ıd)
     {
         var videoString = _educationDal.GetById(ıd).VideoUrl;
